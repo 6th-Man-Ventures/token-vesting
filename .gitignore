@@ -1,0 +1,9 @@
+venv
+__pycache__
+.DS_Store
+.vscode
+.ipynb_checkpoints
+.cfg
+bin
+lib
+share
