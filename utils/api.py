@@ -7,7 +7,7 @@ import pandas as pd
 functions to retrieve and process data from the CoinGecko API. 
 """
 
-KEY = "Your-API-KEY"
+KEY = "YOUR-API-KEY"
 
 
 def to_unix(date: datetime) -> int:
