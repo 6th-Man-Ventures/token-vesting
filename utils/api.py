@@ -7,7 +7,7 @@ import pandas as pd
 functions to retrieve and process data from the CoinGecko API. 
 """
 
-KEY = "YOUR-API-KEY"
+KEY = "CG-RVYAov5kke3A1guMmeG7nfYB"
 
 
 def to_unix(date: datetime) -> int:
@@ -34,6 +34,9 @@ def get_historical_data(id: str, start: datetime, end: datetime) -> pd.DataFrame
         DataFrame of prices for token, circulating supply, and eth prices
     
     """
+
+    if KEY == None: 
+        raise(Exception("No API Key Specified."))
     
     start, end = to_unix(start), to_unix(end)
     res = requests.get(f"https://pro-api.coingecko.com/api/v3/coins/{id}/market_chart/range?vs_currency=usd&from={start}&to={end}&x_cg_pro_api_key={KEY}")

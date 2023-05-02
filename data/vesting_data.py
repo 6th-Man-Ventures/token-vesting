@@ -90,8 +90,8 @@ private_allocations = {
                 "cliff": 0,
                 "cliff_amt": 0,
                 "vesting_frequency": "monthly",
-                "start": "10-14-2021",
-                "end": "09-14-2022"
+                "start": "10-15-2021",
+                "end": "09-15-2022"
             }
         ]
     },
@@ -103,8 +103,8 @@ private_allocations = {
                 "allocation": 3000000,
                 "cliff": 365,
                 "cliff_amt": 0,
-                "vesting_frequency": "daily",
-                "start": "12-12-2021",
+                "vesting_frequency": "monthly",
+                "start": "12-12-2020",
                 "end": "02-12-2023"
             }
         ]
@@ -119,7 +119,7 @@ private_allocations = {
                 "cliff_amt": 0,
                 "vesting_frequency": "daily",
                 "start": "08-31-2022",
-                "end": "08-30-2025"
+                "end": "08-31-2025"
             }
         ]
     },
@@ -132,8 +132,8 @@ private_allocations = {
                 "cliff": 0,
                 "cliff_amt": 0,
                 "vesting_frequency": "daily",
-                "start": "02-16-2021",
-                "end": "02-16-2022"
+                "start": "02-17-2021",
+                "end": "02-17-2022"
             },
             {
                 "group": "Investors",
@@ -141,8 +141,8 @@ private_allocations = {
                 "cliff": 0,
                 "cliff_amt": 0,
                 "vesting_frequency": "daily",
-                "start": "02-16-2021",
-                "end": "02-16-2022"
+                "start": "02-17-2021",
+                "end": "02-17-2022"
             }
         ]
     },
@@ -265,7 +265,7 @@ private_allocations = {
                 "allocation": 978000000,
                 "cliff": 0,
                 "cliff_amt": 0,
-                "vesting_frequency": "daily",
+                "vesting_frequency": "monthly",
                 "start": "02-28-2023",
                 "end": "02-28-2026"
             }

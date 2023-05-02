@@ -72,3 +72,19 @@ def convert_vest(data: list) -> pd.DataFrame:
     return result
 
 
+def adjust_macro(tokens):
+
+    for t in tokens:
+        d_prices = tokens[t]["p_change_price"]
+        d_macro = tokens[t]["p_change_macro"]
+
+        adjusted_price = []
+        for p, m in zip(d_prices, d_macro):
+            adj = p - m
+            adjusted_price.append(adj)
+    
+        tokens[t]["p_change_price"] = adjusted_price
+    
+    return tokens
+  
+

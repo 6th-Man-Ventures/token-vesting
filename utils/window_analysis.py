@@ -6,9 +6,9 @@ process_price_supply_lists(). No other function here needs to be called directly
 
 """
 
-def process_price_supply_lists(tokens: dict, window: int, supply_threshold: tuple[float, float]) -> tuple[list[float], list[float]]:
+def process_price_supply_lists(tokens: dict, window: int, supply_threshold: tuple[float, float], adj_beta=False) -> tuple[list[float], list[float]]:
     """method to create aggregate list of all unlock events (supply change, price change) from a given
-    dictionary of tokens. 
+    dictionary of tokens. Removes overlapping events, filtering out unlocks with high frequency.
 
     args:
         tokens (dict) : dictionary of token daily table data 
@@ -35,23 +35,28 @@ def process_price_supply_lists(tokens: dict, window: int, supply_threshold: tupl
         prices = tokens[token]["price"]
         delta_price = tokens[token]["p_change_price"]
         unlock = tokens[token]["Daily Vest"]
+        macro = tokens[token]["eth"]
+
+        if adj_beta:
+            beta = tokens[token]["beta"]
+        else: 
+            beta = None
 
         for i, (u, s) in enumerate(zip(unlock, delta_supply)):
-            rules = [s < upper_s, 
-                    s > lower_s,
-                    circulating_supply[i] > 0, 
+            rules = [s < upper_s, s > lower_s, circulating_supply[i] > 0, 
                     u > 0]
 
             if all(rules):
                 # retrieve price change percent for given window
-                metric = get_window_metric(window, prices, delta_price, i)
+                metric = get_window_metric(window, prices, delta_price, i, beta, macro)
                 if metric:
                     result_p.append(metric)
                     result_s.append(s)
-            
+    
+    print(f"prices: {len(result_p)}, supplies:  {len(result_s)}")
     return result_p, result_s
 
-def get_window_metric(window: int, prices: list[float], d_price: list[float], i: int) -> float:
+def get_window_metric(window: int, prices: list[float], d_price: list[float], i: int, beta: list[float], macro: list[float]) -> float:
     """given a day's price, calculates change in price during window surrounding it.
 
     args:
@@ -69,19 +74,29 @@ def get_window_metric(window: int, prices: list[float], d_price: list[float], i:
 
     if i + window in range(len(prices)):
         comparison_index = window + i
-        
         day_of = prices[i]
         before = prices[comparison_index]
+        
 
         if comparison_index == i:
             change = d_price[i]
         else:
-            change = ((before - day_of) / day_of) * 100
+            if beta is not None:
+                window_beta = beta[i]
+                macro_change = (macro[comparison_index] - macro[i]) / macro[i] * 100
+                actual_change = ((before - day_of) / day_of) * 100
+
+                change = actual_change - (macro_change * window_beta)
+            
+            else:
+                change = ((before - day_of) / day_of) * 100
 
         return change
 
     else:
         return None
+
+
 
 
 def remove_outliers(data):
@@ -93,3 +108,4 @@ def remove_outliers(data):
     pruned = pruned.dropna().reset_index()
 
     return pruned
+

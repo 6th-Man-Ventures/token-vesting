@@ -18,7 +18,7 @@ Where vest_schedule is a daily table DataFrame for the period of vesting.
 """
 
 def df_column_to_datetime(col: pd.DataFrame, date_type: str = None, date_only: bool = False) -> pd.DataFrame:
-    """Converts single dataframe column to type dateime.
+    """Converts single dataframe column to type datetime.
     
     Args:
         col: REQUIRED. Dataframe column.
