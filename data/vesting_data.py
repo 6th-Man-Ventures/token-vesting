@@ -473,5 +473,19 @@ public_allocations = {
                 "end": "11-11-2032"
             }
         ]
-    }
+    },
+    "looksrare": {
+        "total_supply": 1000000000,
+        "vesting": [
+            {
+                "group": "Airdrop",
+                "allocation": 120000000,
+                "cliff": 0,
+                "cliff_amt": 0,
+                "vesting_frequency": "daily",
+                "start": "01-11-2022",
+                "end": "01-12-2022"
+            }
+        ]
+    },
 }
